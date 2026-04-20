@@ -57,6 +57,8 @@ npm run dev
 ## 📄 Documentation
 
 For detailed architectural info and backend setup, see [WALKTHROUGH.md](./WALKTHROUGH.md).
+Demo Preview:
+<img width="740" height="735" alt="Screenshot 2026-04-21 022236" src="https://github.com/user-attachments/assets/9638cb5a-e4c4-4e87-932d-d3f4eefce957" />
 
 ---
 Developed for high-performance mobile and web gaming.
