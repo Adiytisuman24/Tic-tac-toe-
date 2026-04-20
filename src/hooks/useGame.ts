@@ -31,7 +31,7 @@ export function useGame(
       .select('*')
       .eq('id', gameId)
       .maybeSingle()
-      .then(({ data }) => {
+      .then(({ data }: { data: any }) => {
         if (data) setGame(data as Game);
       });
 
@@ -40,7 +40,7 @@ export function useGame(
       .on(
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table: 'games', filter: `id=eq.${gameId}` },
-        (payload) => {
+        (payload: any) => {
           setGame(payload.new as Game);
         }
       )
@@ -117,7 +117,7 @@ export function useMatchmaking(
           table: 'games',
           filter: `player_x_id=eq.${playerId}`,
         },
-        (payload) => {
+        (payload: any) => {
           const g = payload.new as Game;
           if (g.status === 'playing') {
             setFoundGame(g);
@@ -133,7 +133,7 @@ export function useMatchmaking(
           table: 'games',
           filter: `player_o_id=eq.${playerId}`,
         },
-        (payload) => {
+        (payload: any) => {
           const g = payload.new as Game;
           if (g.status === 'playing') {
             setFoundGame(g);
@@ -169,7 +169,7 @@ export function useRoomWaiting(gameId: string | null) {
   useEffect(() => {
     if (!gameId) return;
 
-    supabase.from('games').select('*').eq('id', gameId).maybeSingle().then(({ data }) => {
+    supabase.from('games').select('*').eq('id', gameId).maybeSingle().then(({ data }: { data: any }) => {
       if (data) setGame(data as Game);
     });
 
@@ -178,7 +178,7 @@ export function useRoomWaiting(gameId: string | null) {
       .on(
         'postgres_changes',
         { event: 'UPDATE', schema: 'public', table: 'games', filter: `id=eq.${gameId}` },
-        (payload) => setGame(payload.new as Game)
+        (payload: any) => setGame(payload.new as Game)
       )
       .subscribe();
 
@@ -206,7 +206,7 @@ export function useLeaderboard() {
       .select('id,username,wins,losses,draws,win_streak,score')
       .order('score', { ascending: false })
       .limit(20)
-      .then(({ data }) => {
+      .then(({ data }: { data: any }) => {
         if (data) setPlayers(data);
         setLoading(false);
       });
