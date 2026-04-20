@@ -6,10 +6,7 @@ const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 // Only initialize if we have credentials to avoid Internal Supabase Error crashes
 export const supabase = (supabaseUrl && supabaseAnonKey) 
   ? createClient(supabaseUrl, supabaseAnonKey)
-  : { 
-      channel: () => ({ on: () => ({ on: () => ({ subscribe: () => ({ unsubscribe: () => {} }) }) }), subscribe: () => ({ unsubscribe: () => {} }) }),
-      from: () => ({ select: () => ({ eq: () => ({ maybeSingle: () => Promise.resolve({ data: null }), order: () => ({ limit: () => Promise.resolve({ data: [] }) }) }) }) })
-    } as any;
+  : null as unknown as ReturnType<typeof createClient>;
 
 export const EDGE_FN_URL = `${supabaseUrl}/functions/v1/game-action`;
 
@@ -17,6 +14,9 @@ export async function callGameAction<T = unknown>(
   action: string,
   payload: Record<string, unknown> = {}
 ): Promise<{ data: T | null; error: string | null }> {
+  if (!supabaseUrl) {
+    return { data: null, error: 'Supabase URL not configured' };
+  }
   try {
     const res = await fetch(EDGE_FN_URL, {
       method: 'POST',
