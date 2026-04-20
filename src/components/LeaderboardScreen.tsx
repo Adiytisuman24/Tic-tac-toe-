@@ -20,8 +20,8 @@ export default function LeaderboardScreen({ playerId, onBack }: LeaderboardScree
             <ArrowLeft className="w-4 h-4" />
           </button>
           <div>
-            <h1 className="text-xl font-bold text-white">Leaderboard</h1>
-            <p className="text-gray-500 text-xs">Global rankings</p>
+            <h1 className="text-xl font-bold text-white">Global Leaderboard</h1>
+            <p className="text-cyan-500 text-xs font-medium uppercase tracking-widest">World Rankings · Top 100</p>
           </div>
         </div>
 

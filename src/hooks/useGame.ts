@@ -231,7 +231,7 @@ export function useLeaderboard() {
       .from('players')
       .select('id,username,wins,losses,draws,win_streak,score')
       .order('score', { ascending: false })
-      .limit(20)
+      .limit(100)
       .then(({ data }: DbResult<LeaderboardPlayer[]>) => {
         if (data) setPlayers(data);
         setLoading(false);
