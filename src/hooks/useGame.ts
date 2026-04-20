@@ -225,7 +225,7 @@ export function useLeaderboard() {
   const [players, setPlayers] = useState<LeaderboardPlayer[]>([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
+  const fetchLeaderboard = useCallback(() => {
     if (!supabase) return;
     supabase
       .from('players')
@@ -237,6 +237,29 @@ export function useLeaderboard() {
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    if (!supabase) return;
+
+    fetchLeaderboard();
+
+    // Subscribe to global player updates to keep leaderboard dynamic
+    const channel = supabase
+      .channel('global-leaderboard')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'players' },
+        () => {
+          // Re-fetch to ensure rankings are correct as players move up/down
+          fetchLeaderboard();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      channel.unsubscribe();
+    };
+  }, [fetchLeaderboard]);
 
   return { players, loading };
 }
