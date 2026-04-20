@@ -3,12 +3,14 @@
 A production-ready, server-authoritative multiplayer Tic-Tac-Toe game featuring an unbeatable AI and seamless cross-platform private rooms.
 
 ## ✨ Features
+
 - **Unbeatable AI**: 100% optimal Minimax algorithm for Moderate/Hard difficulty (Zero human win probability).
 - **Multiplayer**: Server-authoritative matchmaking and private rooms using 6-digit codes.
+- **Dynamic Leaderboard**: Global top 100 rankings that update in real-time as games finish worldwide (Accessible via the "Leaderboard" button).
 - **Modern UI**: High-fidelity, mobile-responsive design with glassmorphism and smooth animations.
-- **Server Authoritative**: All game logic is validated on the backend (Supabase/Nakama) to prevent cheating.
 
 ## 🛠️ Tech Stack
+
 - **Frontend**: React (Vite), TypeScript, Tailwind CSS, Lucide Icons.
 - **Backend**: Supabase (Edge Functions & Auth/Realtime).
 - **Matchmaking**: Nakama Server (Authoritative Match Handler).
@@ -17,23 +19,28 @@ A production-ready, server-authoritative multiplayer Tic-Tac-Toe game featuring 
 ## 🚀 Getting Started
 
 ### 1. Prerequisites
+
 - Node.js (v18+)
 - Supabase Account
 - Nakama Server (Optional for local dev)
 
 ### 2. Installation
+
 ```bash
 npm install
 ```
 
 ### 3. Environment Variables
+
 Create a `.env` file in the root and add your Supabase credentials:
+
 ```env
 VITE_SUPABASE_URL=your_project_url
 VITE_SUPABASE_ANON_KEY=your_anon_key
 ```
 
 ### 4. Running Locally
+
 ```bash
 npm run dev
 ```
@@ -41,12 +48,14 @@ npm run dev
 ## 📦 Deployment
 
 ### Vercel
+
 1. Push this code to GitHub.
 2. Connect your GitHub to Vercel.
 3. **Important**: Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to the Vercel Environment Variables.
 4. Deploy!
 
 ## 📄 Documentation
+
 For detailed architectural info and backend setup, see [WALKTHROUGH.md](./WALKTHROUGH.md).
 
 ---
