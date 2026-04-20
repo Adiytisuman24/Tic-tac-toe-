@@ -17,7 +17,7 @@ interface State {
   mode: 'classic' | 'timed';
 }
 
-const matchInit = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, params: {[key: string]: string}): {state: State, tickRate: number, label: string} => {
+const matchInit = (_ctx: nkruntime.Context, _logger: nkruntime.Logger, _nk: nkruntime.Nakama, params: {[key: string]: string}): {state: State, tickRate: number, label: string} => {
   const mode = params['mode'] || 'classic';
   return {
     state: {
@@ -34,14 +34,14 @@ const matchInit = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkrunti
   };
 };
 
-const matchJoinAttempt = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: State, presence: nkruntime.Presence, metadata: {[key: string]: string}): {state: State, accept: boolean, rejectMessage?: string} => {
+const matchJoinAttempt = (_ctx: nkruntime.Context, _logger: nkruntime.Logger, _nk: nkruntime.Nakama, _dispatcher: nkruntime.MatchDispatcher, _tick: number, state: State, _presence: nkruntime.Presence, _metadata: {[key: string]: string}): {state: State, accept: boolean, rejectMessage?: string} => {
   if (Object.keys(state.players).length >= 2) {
     return { state, accept: false, rejectMessage: 'Match full' };
   }
   return { state, accept: true };
 };
 
-const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: State, presences: nkruntime.Presence[]): {state: State} => {
+const matchJoin = (_ctx: nkruntime.Context, _logger: nkruntime.Logger, _nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, _tick: number, state: State, presences: nkruntime.Presence[]): {state: State} => {
   presences.forEach(p => {
     if (!state.marks['X']) {
       state.marks['X'] = p.userId;
@@ -60,7 +60,7 @@ const matchJoin = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkrunti
   return { state };
 };
 
-const matchLoop = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: State, messages: nkruntime.MatchData[]): State | null => {
+const matchLoop = (_ctx: nkruntime.Context, _logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, _tick: number, state: State, messages: nkruntime.MatchData[]): State | null => {
   // Handle Timer-Based Forfeit
   if (state.mode === 'timed' && Object.keys(state.players).length === 2) {
     const elapsed = Date.now() - state.turnStartedAt;
@@ -111,10 +111,11 @@ function checkWinner(board: (string | null)[]): string | null {
   return null;
 }
 
-const matchLeave = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: State, presences: nkruntime.Presence[]): {state: State} => {
+
+const matchLeave = (_ctx: nkruntime.Context, _logger: nkruntime.Logger, _nk: nkruntime.Nakama, _dispatcher: nkruntime.MatchDispatcher, _tick: number, state: State, _presences: nkruntime.Presence[]): {state: State} => {
   return { state };
 };
 
-const matchTerminate = (ctx: nkruntime.Context, logger: nkruntime.Logger, nk: nkruntime.Nakama, dispatcher: nkruntime.MatchDispatcher, tick: number, state: State, graceSeconds: number): {state: State} => {
+const matchTerminate = (_ctx: nkruntime.Context, _logger: nkruntime.Logger, _nk: nkruntime.Nakama, _dispatcher: nkruntime.MatchDispatcher, _tick: number, state: State, _graceSeconds: number): {state: State} => {
   return { state };
 };

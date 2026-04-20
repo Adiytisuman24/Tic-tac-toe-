@@ -1,9 +1,15 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string;
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// Only initialize if we have credentials to avoid Internal Supabase Error crashes
+export const supabase = (supabaseUrl && supabaseAnonKey) 
+  ? createClient(supabaseUrl, supabaseAnonKey)
+  : { 
+      channel: () => ({ on: () => ({ on: () => ({ subscribe: () => ({ unsubscribe: () => {} }) }) }), subscribe: () => ({ unsubscribe: () => {} }) }),
+      from: () => ({ select: () => ({ eq: () => ({ maybeSingle: () => Promise.resolve({ data: null }), order: () => ({ limit: () => Promise.resolve({ data: [] }) }) }) }) })
+    } as any;
 
 export const EDGE_FN_URL = `${supabaseUrl}/functions/v1/game-action`;
 

@@ -2,7 +2,8 @@
 import { useEffect } from 'react';
 import { LogOut, Bot } from 'lucide-react';
 import { useLocalGame } from '../hooks/useLocalGame';
-import GameBoard, { getWinningCells } from './GameBoard';
+import { getWinningCells } from '../types/game';
+import GameBoard from './GameBoard';
 import type { Game } from '../types/game';
 import type { AIDifficulty } from '../services/ai';
 

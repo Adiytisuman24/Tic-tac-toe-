@@ -2,7 +2,8 @@ import { useEffect, useCallback } from 'react';
 import { LogOut, Wifi } from 'lucide-react';
 import { useGame } from '../hooks/useGame';
 import { callGameAction } from '../services/supabase';
-import GameBoard, { getWinningCells } from './GameBoard';
+import { getWinningCells } from '../types/game';
+import GameBoard from './GameBoard';
 import TurnTimer from './TurnTimer';
 import type { Game } from '../types/game';
 

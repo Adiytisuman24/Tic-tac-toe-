@@ -15,6 +15,9 @@ import type { AIDifficulty } from './services/ai';
 type AppScreen = 'home' | 'matchmaking' | 'waiting_room' | 'game' | 'result' | 'leaderboard';
 
 export default function App() {
+  const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+  const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
   const { playerId, playerName, setPlayerName } = usePlayer();
   const [screen, setScreen] = useState<AppScreen>('home');
   const [gameId, setGameId] = useState<string | null>(null);
@@ -135,6 +138,24 @@ export default function App() {
     setFinishedGame(null);
     setScreen('home');
   }, []);
+
+  if (!supabaseUrl || !supabaseKey) {
+    return (
+      <div className="min-h-screen bg-gray-950 flex items-center justify-center p-6 text-center">
+        <div className="max-w-sm glass-card p-8 rounded-3xl border border-red-500/20">
+          <h1 className="text-red-400 font-bold mb-4">Configuration Required</h1>
+          <p className="text-gray-400 text-sm mb-6">
+            Supabase environment variables are not set in your Vercel settings.
+          </p>
+          <div className="bg-gray-900/50 p-4 rounded-xl text-left text-[10px] font-mono text-gray-500 overflow-x-auto">
+            1. Go to Vercel Dashboard<br/>
+            2. Settings - Environment Variables<br/>
+            3. Add VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (screen === 'home') {
     return (
